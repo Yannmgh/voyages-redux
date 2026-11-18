@@ -1,0 +1,684 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 10px); }
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding-top: 84px;
+}
+
+.app-main.app-main-flush {
+  padding-top: 0;
+}
+
+.app-main > .container > * {
+  animation: fadeInUp 0.5s ease both;
+}
+
+.app-main.app-main-flush > * {
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  border-radius: 50rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--vy-teal);
+  --bs-btn-border-color: var(--vy-teal);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--vy-teal);
+  --bs-btn-hover-border-color: var(--vy-teal);
+  --bs-btn-active-bg: var(--vy-teal);
+  --bs-btn-active-border-color: var(--vy-teal);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  transform: translateY(-2px);
+  box-shadow: var(--vy-shadow-soft);
+}
+
+.btn-outline-light:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--vy-teal);
+  --bs-btn-border-color: var(--vy-teal);
+  --bs-btn-hover-bg: #0b5e58;
+  --bs-btn-hover-border-color: #0b5e58;
+  --bs-btn-active-bg: #0b5e58;
+  --bs-btn-active-border-color: #0b5e58;
+}
+
+.btn-gradient {
+  border: none;
+  color: #fff;
+  background: var(--vy-gradient-sunset);
+  background-size: 160% 160%;
+  background-position: 0% 0%;
+}
+
+.btn-gradient:hover,
+.btn-gradient:focus {
+  background-position: 100% 100%;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: var(--vy-shadow-lift);
+}
+
+/* ---------- Couleurs / utilitaires Bootstrap ---------- */
+.text-primary {
+  color: var(--vy-teal) !important;
+}
+
+.bg-primary {
+  background: var(--vy-gradient-ocean) !important;
+}
+
+.border-primary {
+  border-color: var(--vy-teal) !important;
+}
+
+.badge.bg-primary {
+  background: var(--vy-gradient-sunset) !important;
+  font-weight: 600;
+  padding: 0.45em 0.85em;
+  border-radius: 50rem;
+}
+
+a {
+  color: var(--vy-teal);
+}
+
+a:hover {
+  color: var(--vy-coral);
+}
+
+/* ---------- Cartes ---------- */
+.card {
+  border-radius: var(--vy-radius);
+  background-color: var(--vy-surface);
+  color: var(--vy-text);
+}
+
+.card.shadow-sm {
+  box-shadow: var(--vy-shadow-soft) !important;
+}
+
+/* ---------- Carte destination (image + overlay) ---------- */
+.destination-card {
+  color: inherit;
+  box-shadow: var(--vy-shadow-soft);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border-radius: var(--vy-radius);
+  overflow: hidden;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--vy-shadow-lift);
+  color: inherit;
+}
+
+.destination-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.destination-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.destination-card:hover .destination-card-media img {
+  transform: scale(1.1);
+}
+
+.destination-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.15) 55%, transparent 75%);
+}
+
+.destination-card-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  background: var(--vy-gradient-sunset);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 50rem;
+}
+
+.destination-card-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 1.1rem;
+}
+
+/* ---------- Pastilles de filtre ---------- */
+.filter-pill {
+  border-radius: 50rem;
+}
+
+/* ---------- Navbar ---------- */
+.vy-navbar {
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  min-height: 84px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.vy-navbar-transparent {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+.vy-navbar .navbar-brand {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vy-navbar .navbar-brand .brand-text {
+  background: var(--vy-gradient-sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.vy-navbar .navbar-brand svg {
+  flex-shrink: 0;
+}
+
+.vy-navbar .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin: 0 0.25rem;
+  padding-bottom: 0.4rem !important;
+}
+
+.vy-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 2px;
+  background: var(--vy-gradient-sunset);
+  transition: left 0.25s ease, right 0.25s ease;
+}
+
+.vy-navbar .nav-link:hover,
+.vy-navbar .nav-link.active {
+  color: #fff !important;
+}
+
+.vy-navbar .nav-link:hover::after,
+.vy-navbar .nav-link.active::after {
+  left: 0;
+  right: 0;
+}
+
+.vy-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.vy-navbar .navbar-collapse {
+  background: rgba(15, 23, 42, 0.97);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .vy-navbar .navbar-collapse {
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+  }
+}
+
+/* ---------- Hero plein écran (accueil) ---------- */
+.hero-banner {
+  position: relative;
+  min-height: 86vh;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(15, 23, 42, 0.82) 15%, rgba(15, 23, 42, 0.45) 55%, rgba(190, 24, 93, 0.35));
+}
+
+.hero-banner .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.75);
+  animation: bounceDown 2s infinite;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  color: var(--vy-coral) !important;
+}
+
+.section-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.75rem;
+}
+
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--vy-gradient-sunset);
+}
+
+.section-heading.mx-auto-underline::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---------- Tuiles de stats ---------- */
+.stat-tile {
+  border-radius: 1rem;
+  background: var(--vy-surface);
+  color: var(--vy-text);
+  box-shadow: var(--vy-shadow-soft);
+  padding: 1.1rem 1rem;
+  text-align: center;
+}
+
+.stat-tile .stat-value {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--vy-gradient-ocean);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Cartes "fonctionnalités" ---------- */
+.feature-card {
+  background: var(--vy-surface);
+  color: var(--vy-text);
+  border-radius: 1.25rem;
+  padding: 2rem 1.5rem;
+  box-shadow: var(--vy-shadow-soft);
+  height: 100%;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--vy-shadow-lift);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--vy-gradient-ocean);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* ---------- Bandeau CTA ---------- */
+.cta-band {
+  background: var(--vy-gradient-sunset);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.2), transparent 55%),
+    radial-gradient(circle at 85% 70%, rgba(255, 255, 255, 0.15), transparent 50%);
+}
+
+.cta-band .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Hero de détail destination ---------- */
+.detail-hero {
+  position: relative;
+  height: 56vh;
+  min-height: 360px;
+  overflow: hidden;
+}
+
+.detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4.5rem;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.1) 65%);
+}
+
+/* ---------- Footer ---------- */
+.vy-footer {
+  background: var(--vy-navy);
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 3rem;
+}
+
+.vy-footer a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.vy-footer a:hover {
+  color: var(--vy-amber);
+}
+
+.vy-footer .brand-text {
+  background: var(--vy-gradient-sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+}
+
+.vy-footer h6 {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.vy-footer hr {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Authentification / Contact (panneau fractionné) ---------- */
+.auth-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 260px);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 900px;
+  border-radius: calc(var(--vy-radius) + 0.25rem);
+  overflow: hidden;
+  box-shadow: var(--vy-shadow-lift);
+}
+
+.auth-visual {
+  background: var(--vy-gradient-sunset);
+  color: #fff;
+  min-height: 100%;
+  padding: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+    radial-gradient(circle at 85% 80%, rgba(255, 255, 255, 0.18), transparent 50%);
+}
+
+.auth-visual > * {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-visual h2 {
+  font-size: 1.9rem;
+}
+
+.auth-visual-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.contact-info-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Formulaires ---------- */
+.form-control,
+.form-select {
+  border-radius: 0.85rem;
+  border-color: var(--vy-border);
+  background-color: var(--vy-surface);
+  color: var(--vy-text);
+  padding: 0.65rem 1rem;
+}
+
+.form-control::placeholder {
+  color: var(--vy-text-muted);
+  opacity: 1;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--vy-surface);
+  color: var(--vy-text);
+  border-color: var(--vy-teal);
+  box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.15);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ---------- Texte / bordures génériques ---------- */
+.text-muted {
+  color: var(--vy-text-muted) !important;
+}
+
+hr {
+  border-color: var(--vy-border);
+  opacity: 1;
+}
+
+/* ---------- Profil ---------- */
+.profile-avatar-ring {
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--vy-gradient-sunset);
+  display: inline-block;
+}
+
+.profile-avatar-ring img {
+  display: block;
+  border: 3px solid #fff;
+}
+
+.profile-field-list li {
+  border-bottom: 1px dashed var(--vy-border);
+  padding: 0.5rem 0;
+}
+
+.profile-field-list li:last-child {
+  border-bottom: none;
+}
+
+/* ---------- A propos ---------- */
+.value-card {
+  background: var(--vy-surface);
+  color: var(--vy-text);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: var(--vy-shadow-soft);
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--vy-shadow-lift);
+}
+
+.about-hero-image {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  border-radius: var(--vy-radius);
+}
+
+/* ---------- Favoris ---------- */
+.favorite-remove-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--vy-shadow-soft);
+}
+
+.favorite-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------- 404 ---------- */
+.notfound-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--vy-gradient-sunset);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
