@@ -1,7 +1,10 @@
+import { useEffect } from "react"
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import DestinationCard from "../components/DestinationCard"
-import { destinations } from "../data/destinations"
+import { fetchDestinations } from "../features/destinations/destinationsSlice"
+import { useDocumentTitle } from "../hooks/useDocumentTitle"
 
 const HERO_IMAGE = "https://cdn.pixabay.com/photo/2016/08/14/13/43/gorges-du-verdon-1592934_1280.jpg"
 
@@ -38,6 +41,16 @@ const features = [
 ]
 
 function HomePage() {
+    useDocumentTitle()
+    const dispatch = useDispatch()
+    const { items: destinations, status } = useSelector((state) => state.destinations)
+
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchDestinations())
+        }
+    }, [dispatch, status])
+
     const featured = destinations.slice(0, 3)
 
     return (

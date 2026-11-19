@@ -5,21 +5,17 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import * as yup from "yup"
+import { FiUser, FiMail, FiLock } from "react-icons/fi"
 import { clearAuthError, registerUser } from "../features/auth/authSlice"
+import { passwordField } from "../utils/validation"
+import { useDocumentTitle } from "../hooks/useDocumentTitle"
 
 const registerSchema = yup.object({
     username: yup
         .string()
         .required("Le nom d'utilisateur est obligatoire")
         .min(4, "Le nom d'utilisateur doit avoir au moins 4 caractères"),
-    password: yup
-        .string()
-        .required("Le mot de passe est obligatoire")
-        .min(8, "Le mot de passe doit avoir au moins 8 caractères")
-        .matches(/[a-z]/, "Le mot de passe doit contenir au moins une minuscule")
-        .matches(/[A-Z]/, "Le mot de passe doit contenir au moins une majuscule")
-        .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
-        .matches(/[^a-zA-Z0-9]/, "Le mot de passe doit contenir au moins un caractère spécial"),
+    password: passwordField,
     email: yup
         .string()
         .required("L'email est obligatoire")
@@ -41,6 +37,7 @@ const registerSchema = yup.object({
 })
 
 function RegisterPage() {
+    useDocumentTitle("Créer un compte")
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
@@ -143,42 +140,51 @@ function RegisterPage() {
 
                                 <Form.Group controlId="username" className="mb-3">
                                     <Form.Label>Nom d'utilisateur</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Votre nom d'utilisateur"
-                                        isInvalid={!!errors.username}
-                                        {...register("username")}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
+                                    <div className="search-field">
+                                        <FiUser className="search-field-icon" />
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Votre nom d'utilisateur"
+                                            isInvalid={!!errors.username}
+                                            {...register("username")}
+                                        />
+                                    </div>
+                                    <Form.Control.Feedback type="invalid" className={errors.username ? "d-block" : ""}>
                                         {errors.username?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group controlId="email" className="mb-3">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        placeholder="Votre email"
-                                        isInvalid={!!errors.email}
-                                        {...register("email")}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
+                                    <div className="search-field">
+                                        <FiMail className="search-field-icon" />
+                                        <Form.Control
+                                            type="email"
+                                            placeholder="Votre email"
+                                            isInvalid={!!errors.email}
+                                            {...register("email")}
+                                        />
+                                    </div>
+                                    <Form.Control.Feedback type="invalid" className={errors.email ? "d-block" : ""}>
                                         {errors.email?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group controlId="password" className="mb-3">
                                     <Form.Label>Mot de passe</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Votre mot de passe"
-                                        isInvalid={!!errors.password}
-                                        {...register("password")}
-                                    />
+                                    <div className="search-field">
+                                        <FiLock className="search-field-icon" />
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Votre mot de passe"
+                                            isInvalid={!!errors.password}
+                                            {...register("password")}
+                                        />
+                                    </div>
                                     <Form.Text muted>
                                         Au moins 8 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial.
                                     </Form.Text>
-                                    <Form.Control.Feedback type="invalid">
+                                    <Form.Control.Feedback type="invalid" className={errors.password ? "d-block" : ""}>
                                         {errors.password?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>

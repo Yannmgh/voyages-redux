@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components -- fichier de configuration de routes, pas un composant */
 // Avec react router, il est possible de déplacer la logique de navigation dans un fichier dédié.
+import { lazy, Suspense } from "react"
 import { createBrowserRouter, Navigate } from "react-router-dom"
 // createBrowserRouter permet de créer un router selon les url du navigateur
 
@@ -6,8 +8,7 @@ import MainLayout from "../layouts/MainLayout"
 import ProtectedRoute from "../components/ProtectedRoute"
 import GuestRoute from "../components/GuestRoute"
 import AdminRoute from "../components/AdminRoute"
-import AboutPage from "../pages/AboutPage"
-import AdminPage from "../pages/AdminPage"
+import RouteLoader from "../components/RouteLoader"
 import DestinationDetailsPage from "../pages/DestinationDetailsPage"
 import DestinationsPage from "../pages/DestinationsPage"
 import FavoritesPage from "../pages/FavoritesPage"
@@ -17,6 +18,21 @@ import NotFoundPage from "../pages/NotFoundPage"
 import ProfilePage from "../pages/ProfilePage"
 import RegisterPage from "../pages/RegisterPage"
 import ContactPage from "../pages/ContactPage"
+
+// Routes secondaires chargées à la demande pour alléger le bundle initial.
+const AboutPage = lazy(() => import("../pages/AboutPage"))
+const AdminLayout = lazy(() => import("../layouts/AdminLayout"))
+const AdminOverviewPage = lazy(() => import("../pages/admin/AdminOverviewPage"))
+const AdminCommentsPage = lazy(() => import("../pages/admin/AdminCommentsPage"))
+const AdminContactsPage = lazy(() => import("../pages/admin/AdminContactsPage"))
+const AdminDestinationsPage = lazy(() => import("../pages/admin/AdminDestinationsPage"))
+const AdminUsersPage = lazy(() => import("../pages/admin/AdminUsersPage"))
+
+const lazyPage = (Component) => (
+    <Suspense fallback={<RouteLoader />}>
+        <Component />
+    </Suspense>
+)
 
 const router = createBrowserRouter([
     {
@@ -29,7 +45,7 @@ const router = createBrowserRouter([
                 index: true,
                 // c'est la page par défaut
                 element: <HomePage />
-            }, 
+            },
             {
                 path: "destinations",
                 element: <DestinationsPage />
@@ -49,7 +65,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "about",
-                element: <AboutPage />
+                element: lazyPage(AboutPage)
             },
             {
                 path: "login",
@@ -87,9 +103,16 @@ const router = createBrowserRouter([
                 path: "admin",
                 element: (
                     <AdminRoute>
-                        <AdminPage />
+                        {lazyPage(AdminLayout)}
                     </AdminRoute>
-                )
+                ),
+                children: [
+                    { index: true, element: <AdminOverviewPage /> },
+                    { path: "contacts", element: <AdminContactsPage /> },
+                    { path: "users", element: <AdminUsersPage /> },
+                    { path: "comments", element: <AdminCommentsPage /> },
+                    { path: "destinations", element: <AdminDestinationsPage /> },
+                ]
             },
             {
                 path: "*",

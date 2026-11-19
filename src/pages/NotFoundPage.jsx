@@ -1,7 +1,9 @@
 import { Button, Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { useDocumentTitle } from "../hooks/useDocumentTitle"
 
 function NotFoundPage() {
+    useDocumentTitle("Page introuvable")
     return (
         <section>
             <Card className="border-0 shadow-sm overflow-hidden text-center">

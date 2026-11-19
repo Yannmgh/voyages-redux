@@ -7,17 +7,14 @@ import './App.css'
 import router from "./router/Router"
 import { RouterProvider } from 'react-router-dom';
 import { store } from './app/store'
-import { FavoritesProvider } from './context/FavoritesContext'
-import { ThemeProvider } from './context/ThemeContext'
+import { ToastProvider } from './components/ToastProvider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <ThemeProvider>
-        <FavoritesProvider>
-          <RouterProvider router={router} />
-        </FavoritesProvider>
-      </ThemeProvider>
+      <ToastProvider>
+        <RouterProvider router={router} />
+      </ToastProvider>
     </Provider>
   </StrictMode>,
 )

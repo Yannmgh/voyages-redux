@@ -10,7 +10,7 @@ function DestinationCard({ destination }) {
         >
             <div className="destination-card-media">
                 <img src={destination.image} alt={destination.name} />
-                <span className="destination-card-badge">{destination.region}</span>
+                <span className="destination-card-badge">{destination.region_name}</span>
                 <div className="destination-card-info">
                     <h3 className="h5 fw-bold text-white mb-1">{destination.name}</h3>
                     <p className="text-white-50 small mb-0">Capitale : {destination.capital}</p>

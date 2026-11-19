@@ -5,7 +5,9 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import * as yup from "yup"
+import { FiUser, FiLock } from "react-icons/fi"
 import { clearAuthError, loginUser } from "../features/auth/authSlice"
+import { useDocumentTitle } from "../hooks/useDocumentTitle"
 
 const loginSchema = yup.object({
     username: yup
@@ -17,6 +19,7 @@ const loginSchema = yup.object({
 })
 
 function LoginPage() {
+    useDocumentTitle("Connexion")
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
@@ -80,26 +83,32 @@ function LoginPage() {
                             <Form onSubmit={handleSubmit(onSubmit)}>
                                 <Form.Group controlId="username" className="mb-3">
                                     <Form.Label>Nom d'utilisateur</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Votre nom d'utilisateur"
-                                        isInvalid={!!errors.username}
-                                        {...register("username")}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
+                                    <div className="search-field">
+                                        <FiUser className="search-field-icon" />
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Votre nom d'utilisateur"
+                                            isInvalid={!!errors.username}
+                                            {...register("username")}
+                                        />
+                                    </div>
+                                    <Form.Control.Feedback type="invalid" className={errors.username ? "d-block" : ""}>
                                         {errors.username?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>
 
                                 <Form.Group controlId="password" className="mb-4">
                                     <Form.Label>Mot de passe</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Votre mot de passe"
-                                        isInvalid={!!errors.password}
-                                        {...register("password")}
-                                    />
-                                    <Form.Control.Feedback type="invalid">
+                                    <div className="search-field">
+                                        <FiLock className="search-field-icon" />
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Votre mot de passe"
+                                            isInvalid={!!errors.password}
+                                            {...register("password")}
+                                        />
+                                    </div>
+                                    <Form.Control.Feedback type="invalid" className={errors.password ? "d-block" : ""}>
                                         {errors.password?.message}
                                     </Form.Control.Feedback>
                                 </Form.Group>

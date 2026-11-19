@@ -1,4 +1,6 @@
 import { Card, Col, Row } from "react-bootstrap"
+import { useDocumentTitle } from "../hooks/useDocumentTitle"
+import { useRevealOnScroll } from "../hooks/useRevealOnScroll"
 
 const values = [
     {
@@ -35,7 +37,19 @@ const values = [
     },
 ]
 
+function ValueCard({ value }) {
+    const [ref, visible] = useRevealOnScroll()
+    return (
+        <div ref={ref} className={`value-card text-center reveal-on-scroll${visible ? " is-visible" : ""}`}>
+            <div className="feature-icon mb-3">{value.icon}</div>
+            <h3 className="h5 fw-bold">{value.title}</h3>
+            <p className="text-muted mb-0">{value.text}</p>
+        </div>
+    )
+}
+
 function AboutPage() {
+    useDocumentTitle("À propos")
     return (
         <section>
             <Card className="border-0 shadow-sm overflow-hidden mb-5">
@@ -71,11 +85,7 @@ function AboutPage() {
             <Row className="g-4 mb-3">
                 {values.map((value) => (
                     <Col md={4} key={value.title}>
-                        <div className="value-card text-center">
-                            <div className="feature-icon mb-3">{value.icon}</div>
-                            <h3 className="h5 fw-bold">{value.title}</h3>
-                            <p className="text-muted mb-0">{value.text}</p>
-                        </div>
+                        <ValueCard value={value} />
                     </Col>
                 ))}
             </Row>

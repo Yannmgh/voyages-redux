@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FiUser, FiMail } from "react-icons/fi";
 import { resetContactStatus, submitContactMessage } from "../features/contact/contactSlice";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 const contactSchema = yup.object({
     name: yup
@@ -56,7 +58,9 @@ const contactInfo = [
 ]
 
 function ContactPage() {
+    useDocumentTitle("Contact")
     const dispatch = useDispatch()
+    const user = useSelector((state) => state.auth.user)
     const { submitStatus, submitError } = useSelector((state) => state.contact)
 
     const {
@@ -66,17 +70,22 @@ function ContactPage() {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(contactSchema),
+        // Pré-rempli une seule fois avec les infos du compte connecté (si on est
+        // déjà connecté au premier rendu) : le nom/email restent ensuite modifiables.
         defaultValues: {
-            name: '',
-            email: '',
-            subject: '',
-            message: '',
+            name: user ? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim() || user.username : "",
+            email: user?.email ?? "",
+            subject: "",
+            message: "",
         }
     })
 
     const onSubmit = async (data) => {
         try {
-            await dispatch(submitContactMessage(data)).unwrap()
+            // Si l'utilisateur est connecté, on fournit explicitement son id en plus
+            // du token (déjà envoyé automatiquement par apiRequest).
+            const payload = user ? { ...data, user_id: user.id } : data
+            await dispatch(submitContactMessage(payload)).unwrap()
             reset()
         } catch {
             // l'erreur est déjà exposée via le state Redux (submitError)
@@ -123,25 +132,31 @@ function ContactPage() {
                         <Form onSubmit={handleSubmit(onSubmit)}>
                             <Form.Group controlId="name" className="mb-3">
                                 <Form.Label>Nom</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Votre nom"
-                                    isInvalid={!!errors.name}
-                                    {...register("name")}
-                                />
-                                <Form.Control.Feedback type="invalid">
+                                <div className="search-field">
+                                    <FiUser className="search-field-icon" />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Votre nom"
+                                        isInvalid={!!errors.name}
+                                        {...register("name")}
+                                    />
+                                </div>
+                                <Form.Control.Feedback type="invalid" className={errors.name ? "d-block" : ""}>
                                     {errors.name?.message}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group controlId="email" className="mb-3">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="Votre email"
-                                    isInvalid={!!errors.email}
-                                    {...register("email")}
-                                />
-                                <Form.Control.Feedback type="invalid">
+                                <div className="search-field">
+                                    <FiMail className="search-field-icon" />
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="Votre email"
+                                        isInvalid={!!errors.email}
+                                        {...register("email")}
+                                    />
+                                </div>
+                                <Form.Control.Feedback type="invalid" className={errors.email ? "d-block" : ""}>
                                     {errors.email?.message}
                                 </Form.Control.Feedback>
                             </Form.Group>
